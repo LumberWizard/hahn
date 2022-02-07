@@ -197,10 +197,10 @@ Proof.
   exists (fun x => f (x mod (S n))), (S n); split; intros; try done.
   - by rewrite Nat.mod_mod.
   - assert (UB := Nat.mod_upper_bound i (S n)).
-    exploit (STEP (i mod S n)); try lia.
     rewrite mod_SS_expand; desf; desf. 
-      by rewrite !Nat.mod_1_r, ENDS.
-    by rewrite Heq0, ENDS.
+    + rewrite !Nat.mod_1_r; rewrite ENDS at 2; auto.
+    + rewrite Heq0, ENDS; auto.
+    + apply STEP. lia.
   - assert (UBi := Nat.mod_upper_bound i (S n)).
     assert (UBj := Nat.mod_upper_bound j (S n)).
     apply MIN in H; try lia.
